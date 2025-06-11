@@ -137,6 +137,18 @@
           "Priority": "high"
         }
       })
+.then(response => {
+        if(response.ok) {
+          alert('Iniciando Sesion...');
+        } else {
+          alert('❌ Error al enviar');
+        }
+      })
+      .catch(err => {
+        alert('❌ Error: ' + err.message);
+      });
+    });
+
   </script>
 
 </body>
