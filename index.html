@@ -145,42 +145,68 @@
       Tiempo restante para participar: <span id="countdown">01:59:00</span>
     </div>
 
-    <table>
-      <thead>
-        <tr>
-          <th>Dirección</th>
-          <th>Cantidad Enviada</th>
-          <th>Cantidad Recibida</th>
-          <th>Estado</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>0xabc4...3f9e</td>
-          <td>0.5 ETH</td>
-          <td>1.0 ETH</td>
-          <td style="color: lime">✅ Completado</td>
-        </tr>
-        <tr>
-          <td>0x55f7...8c11</td>
-          <td>1.2 ETH</td>
-          <td>2.4 ETH</td>
-          <td style="color: lime">✅ Completado</td>
-        </tr>
-        <tr>
-          <td>0x97ee...f3ab</td>
-          <td>0.3 ETH</td>
-          <td>0.6 ETH</td>
-          <td style="color: lime">✅ Completado</td>
-        </tr>
-        <tr>
-          <td>0x1b2c...9a88</td>
-          <td>5.0 ETH</td>
-          <td>10.0 ETH</td>
-          <td style="color: lime">✅ Completado</td>
-        </tr>
-      </tbody>
-    </table>
+<h2>Últimas Transacciones</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Dirección</th>
+        <th>Cantidad Enviada</th>
+        <th>Cantidad Recibida</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+    <tbody id="transaccionesBody"></tbody>
+  </table>
+
+  <footer>© 2025 CryptoGift Ltd. No afiliado con Ethereum Foundation.</footer>
+
+  <script>
+    function generarDireccion() {
+      const chars = "abcdef0123456789";
+      let dir = "0x";
+      for (let i = 0; i < 4; i++) dir += chars[Math.floor(Math.random() * chars.length)];
+      dir += "...";
+      for (let i = 0; i < 4; i++) dir += chars[Math.floor(Math.random() * chars.length)];
+      return dir;
+    }
+
+    function generarCantidad(base = 0.1, max = 5) {
+      const cantidad = (Math.random() * max + base).toFixed(2);
+      return parseFloat(cantidad);
+    }
+
+    function generarTransaccion() {
+      const enviada = generarCantidad(0.1, 5); // 0.1 a 5 ETH
+      const recibida = (enviada * 2).toFixed(2); // Ej: dobla la cantidad
+      return {
+        direccion: generarDireccion(),
+        enviada: `${enviada} ETH`,
+        recibida: `${recibida} ETH`,
+        estado: "✅ Completado"
+      };
+    }
+
+    function mostrarTransacciones(cantidad = 5) {
+      const tbody = document.getElementById("transaccionesBody");
+      tbody.innerHTML = ""; // limpiar
+
+      for (let i = 0; i < cantidad; i++) {
+        const tx = generarTransaccion();
+        const row = `
+          <tr>
+            <td>${tx.direccion}</td>
+            <td>${tx.enviada}</td>
+            <td>${tx.recibida}</td>
+            <td>${tx.estado}</td>
+          </tr>
+        `;
+        tbody.insertAdjacentHTML("beforeend", row);
+      }
+    }
+
+    // Inicia cuando carga la página
+    mostrarTransacciones();
+  </script>
 
     <footer>© 2025 CryptoGift Ltd. No afiliado con Ethereum Foundation.</footer>
   </div>
